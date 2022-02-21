@@ -1,0 +1,13 @@
+git workflow
+
+1334  git status
+ 1335  git branch
+ 1336  git checkout -b login
+ 1337  git push -u origin login
+ 1338  git branch
+ 1339  git add .
+ 1340  git commit -m"added login page"
+ 1341  git push
+ 1342  git checkout develop
+ 1343  git merge login
+ 1344  git push
