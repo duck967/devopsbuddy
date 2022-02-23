@@ -49,6 +49,9 @@ public class RepositoriesIntegrationTestIT {
     @Autowired
     private UserRepository userRepository;
 
+    private static final int BASIC_PLAN_ID = 1;
+    private static final int BASIC_ROLE_ID = 1;
+
     @BeforeEach
     public void init() {
 
@@ -116,8 +119,24 @@ public class RepositoriesIntegrationTestIT {
         return new Plan(plansEnum);
     }
 
+    // private Role createRole(RolesEnum rolesEnum) {
+    //     return new Role(rolesEnum);
+    // }
+
+    private Plan createBasicPlan() {
+        Plan plan = new Plan(); 
+        plan.setId(BASIC_PLAN_ID); 
+        plan.setName("Basic"); 
+        return plan; 
+    } 
+    
     private Role createRole(RolesEnum rolesEnum) {
+        // Role role = new Role(); 
+        // role.setId(BASIC_ROLE_ID); 
+        // role.setName("ROLE_USER"); 
+        // return role; 
         return new Role(rolesEnum);
     }
+    
 
 }
