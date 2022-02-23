@@ -11,3 +11,16 @@ git workflow
  1342  git checkout develop
  1343  git merge login
  1344  git push
+
+git stash save
+git checkout branch
+// do something
+git checkout oldbranch
+git stash pop
+
+
+To delete a local branch in Git, you simply run:
+git branch -d <branch-name> ...
+git branch -D <branch-name> ...
+git push --delete <remote name> <branch name> .
+
