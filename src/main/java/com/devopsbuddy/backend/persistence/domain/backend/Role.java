@@ -17,11 +17,12 @@ public class Role implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO) //rjd
     private int id;
 
     private String name;
 
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.EAGER) //rjd - was lasy 
     private Set<UserRole> userRoles = new HashSet<>();
 
     public Role() {

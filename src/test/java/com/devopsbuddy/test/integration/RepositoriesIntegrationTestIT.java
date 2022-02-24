@@ -79,27 +79,45 @@ public class RepositoriesIntegrationTestIT {
         assertNotNull(retrievedRole);
     }
 
+    // @Test
+    // public void createNewUserOld() throws Exception {
+
+    //     Plan basicPlan = createPlan(PlansEnum.BASIC);
+    //     planRepository.save(basicPlan);
+
+    //     User basicUser = UserUtils.createBasicUser();
+    //     basicUser.setPlan(basicPlan);
+
+    //     Role basicRole = createRole(RolesEnum.BASIC);
+    //     Set<UserRole> userRoles = new HashSet<>();
+    //     UserRole userRole = new UserRole(basicUser, basicRole);
+    //     userRoles.add(userRole);
+
+    //     basicUser.getUserRoles().addAll(userRoles);
+
+    //     for (UserRole ur : userRoles) {
+    //         roleRepository.save(ur.getRole());
+    //     }
+
+    //     basicUser = userRepository.save(basicUser);
+    //     User newlyCreatedUser = userRepository.findById(basicUser.getId()).orElse(null);
+    //     assertNotNull(newlyCreatedUser);
+    //     assertTrue(newlyCreatedUser.getId() != 0);
+    //     assertNotNull(newlyCreatedUser.getPlan());
+    //     assertNotNull(newlyCreatedUser.getPlan().getId());
+    //     Set<UserRole> newlyCreatedUserUserRoles = newlyCreatedUser.getUserRoles();
+    //     for (UserRole ur : newlyCreatedUserUserRoles) {
+    //         assertNotNull(ur.getRole());
+    //         assertNotNull(ur.getRole().getId());
+    //     }
+
+    // }
+
     @Test
     public void createNewUser() throws Exception {
 
-        Plan basicPlan = createPlan(PlansEnum.BASIC);
-        planRepository.save(basicPlan);
+        User basicUser = createUser();
 
-        User basicUser = UserUtils.createBasicUser();
-        basicUser.setPlan(basicPlan);
-
-        Role basicRole = createRole(RolesEnum.BASIC);
-        Set<UserRole> userRoles = new HashSet<>();
-        UserRole userRole = new UserRole(basicUser, basicRole);
-        userRoles.add(userRole);
-
-        basicUser.getUserRoles().addAll(userRoles);
-
-        for (UserRole ur : userRoles) {
-            roleRepository.save(ur.getRole());
-        }
-
-        basicUser = userRepository.save(basicUser);
         User newlyCreatedUser = userRepository.findById(basicUser.getId()).orElse(null);
         assertNotNull(newlyCreatedUser);
         assertTrue(newlyCreatedUser.getId() != 0);
@@ -112,6 +130,14 @@ public class RepositoriesIntegrationTestIT {
         }
 
     }
+
+    
+    @Test
+    public void testDeleteUser() throws Exception {
+        User basicUser = createUser();
+        userRepository.deleteById(basicUser.getId());
+    }
+
 
     //-----------------> Private methods
 
@@ -138,5 +164,23 @@ public class RepositoriesIntegrationTestIT {
         return new Role(rolesEnum);
     }
     
+    private User createUser() {
+        Plan basicPlan = createPlan(PlansEnum.BASIC);
+        planRepository.save(basicPlan);
+
+        User basicUser = UserUtils.createBasicUser();
+        basicUser.setPlan(basicPlan);
+
+        Role basicRole = createRole(RolesEnum.BASIC);
+        roleRepository.save(basicRole);
+
+        Set<UserRole> userRoles = new HashSet<>();
+        UserRole userRole = new UserRole(basicUser, basicRole);
+        userRoles.add(userRole);
+
+        basicUser.getUserRoles().addAll(userRoles);
+        basicUser = userRepository.save(basicUser);
+        return basicUser;
+    }
 
 }
