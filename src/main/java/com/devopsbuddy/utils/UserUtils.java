@@ -8,7 +8,11 @@ import com.devopsbuddy.backend.persistence.domain.backend.User;
 public class UserUtils {
 
     /**
-     * Non instantiable.
+     * Create a basic user
+     * 
+     * @param username the username
+     * @param email user's email address
+     * @return a basic user
      */
     private UserUtils() {
         throw new AssertionError("Non instantiable");
@@ -18,12 +22,12 @@ public class UserUtils {
      * Creates a user with basic attributes set.
      * @return A User entity
      */
-    public static User createBasicUser() {
+    public static User createBasicUser(String username, String email) {
 
         User user = new User();
-        user.setUsername("basicUser");
+        user.setUsername(username);
         user.setPassword("secret");
-        user.setEmail("me@example.com");
+        user.setEmail(email);
         user.setFirstName("firstName");
         user.setLastName("lastName");
         user.setPhoneNumber("123456789123");

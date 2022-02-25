@@ -23,7 +23,9 @@ import com.devopsbuddy.utils.UserUtils;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.parallel.ResourceLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Sort;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -48,6 +50,7 @@ public class RepositoriesIntegrationTestIT {
 
     @Autowired
     private UserRepository userRepository;
+
 
     private static final int BASIC_PLAN_ID = 1;
     private static final int BASIC_ROLE_ID = 1;
@@ -114,9 +117,12 @@ public class RepositoriesIntegrationTestIT {
     // }
 
     @Test
-    public void createNewUser() throws Exception {
+    public void createNewUser(TestInfo testInfo) throws Exception {
 
-        User basicUser = createUser();
+        String username = testInfo.getDisplayName();
+        String email = testInfo.getDisplayName() + "@example.com";
+
+        User basicUser = createUser(username, email);
 
         User newlyCreatedUser = userRepository.findById(basicUser.getId()).orElse(null);
         assertNotNull(newlyCreatedUser);
@@ -133,8 +139,12 @@ public class RepositoriesIntegrationTestIT {
 
     
     @Test
-    public void testDeleteUser() throws Exception {
-        User basicUser = createUser();
+    public void testDeleteUser(TestInfo testInfo) throws Exception {
+
+        String username = testInfo.getDisplayName();
+        String email = testInfo.getDisplayName() + "@example.com";
+
+        User basicUser = createUser(username, email);
         userRepository.deleteById(basicUser.getId());
     }
 
@@ -164,11 +174,11 @@ public class RepositoriesIntegrationTestIT {
         return new Role(rolesEnum);
     }
     
-    private User createUser() {
+    private User createUser(String username, String email) {
         Plan basicPlan = createPlan(PlansEnum.BASIC);
         planRepository.save(basicPlan);
 
-        User basicUser = UserUtils.createBasicUser();
+        User basicUser = UserUtils.createBasicUser(username, email);
         basicUser.setPlan(basicPlan);
 
         Role basicRole = createRole(RolesEnum.BASIC);

@@ -15,6 +15,7 @@ import com.devopsbuddy.enums.RolesEnum;
 import com.devopsbuddy.utils.UserUtils;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,10 +28,13 @@ public class UserServiceIntegrationTestIT {
     private UserService userService;
 
     @Test
-    public void testCreateNewUser() throws Exception {
+    public void testCreateNewUser(TestInfo testInfo) throws Exception {
+
+        String username = testInfo.getDisplayName();
+        String email = testInfo.getDisplayName() + "@example.com";
 
         Set<UserRole> userRoles = new HashSet<>();
-        User basicUser = UserUtils.createBasicUser();
+        User basicUser = UserUtils.createBasicUser(username, email);
         userRoles.add(new UserRole(basicUser, new Role(RolesEnum.BASIC)));
 
         User user = userService.createUser(basicUser, PlansEnum.BASIC, userRoles);
