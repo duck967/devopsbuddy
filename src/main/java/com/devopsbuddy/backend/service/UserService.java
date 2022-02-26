@@ -48,6 +48,9 @@ public class UserService {
         user.setPlan(plan);
 
         for (UserRole ur : userRoles) {
+            if (!roleRepository.existsById(ur.getRole().getId())) {
+                ur.setRole(roleRepository.save(ur.getRole()));
+            }
             roleRepository.save(ur.getRole());
         }
 
