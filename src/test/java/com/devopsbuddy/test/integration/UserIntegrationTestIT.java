@@ -40,7 +40,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 // @WebAppConfiguration
 // @DataJpaTest
-public class RepositoriesIntegrationTestIT {
+public class UserIntegrationTestIT extends AbstractIntegrationTestIT {
     
     @Autowired
     private PlanRepository planRepository;
@@ -151,46 +151,5 @@ public class RepositoriesIntegrationTestIT {
 
     //-----------------> Private methods
 
-    private Plan createPlan(PlansEnum plansEnum) {
-        return new Plan(plansEnum);
-    }
-
-    // private Role createRole(RolesEnum rolesEnum) {
-    //     return new Role(rolesEnum);
-    // }
-
-    private Plan createBasicPlan() {
-        Plan plan = new Plan(); 
-        plan.setId(BASIC_PLAN_ID); 
-        plan.setName("Basic"); 
-        return plan; 
-    } 
-    
-    private Role createRole(RolesEnum rolesEnum) {
-        // Role role = new Role(); 
-        // role.setId(BASIC_ROLE_ID); 
-        // role.setName("ROLE_USER"); 
-        // return role; 
-        return new Role(rolesEnum);
-    }
-    
-    private User createUser(String username, String email) {
-        Plan basicPlan = createPlan(PlansEnum.BASIC);
-        planRepository.save(basicPlan);
-
-        User basicUser = UserUtils.createBasicUser(username, email);
-        basicUser.setPlan(basicPlan);
-
-        Role basicRole = createRole(RolesEnum.BASIC);
-        roleRepository.save(basicRole);
-
-        Set<UserRole> userRoles = new HashSet<>();
-        UserRole userRole = new UserRole(basicUser, basicRole);
-        userRoles.add(userRole);
-
-        basicUser.getUserRoles().addAll(userRoles);
-        basicUser = userRepository.save(basicUser);
-        return basicUser;
-    }
 
 }
