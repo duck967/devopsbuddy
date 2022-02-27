@@ -9,4 +9,15 @@ function main() {
         $collapse.collapse('toggle');
     });
 
+    $("#contactForm").validate();
+
+    $( "#savePasswordForm" ).validate({
+        rules: {
+          password: "required",
+          confirmPassword: {
+            equalTo: "#password"
+          }
+        }
+      });
+    
 }
