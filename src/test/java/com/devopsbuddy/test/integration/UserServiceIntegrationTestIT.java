@@ -23,21 +23,15 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = DevopsbuddyApplication.class)
-public class UserServiceIntegrationTestIT {
+public class UserServiceIntegrationTestIT extends AbstractServiceIntegrationTestIT {
     @Autowired
     private UserService userService;
 
     @Test
     public void testCreateNewUser(TestInfo testInfo) throws Exception {
 
-        String username = testInfo.getDisplayName();
-        String email = testInfo.getDisplayName() + "@example.com";
 
-        Set<UserRole> userRoles = new HashSet<>();
-        User basicUser = UserUtils.createBasicUser(username, email);
-        userRoles.add(new UserRole(basicUser, new Role(RolesEnum.BASIC)));
-
-        User user = userService.createUser(basicUser, PlansEnum.BASIC, userRoles);
+        User user = createUser(testInfo);
         assertNotNull(user);
         assertNotNull(user.getId());
 

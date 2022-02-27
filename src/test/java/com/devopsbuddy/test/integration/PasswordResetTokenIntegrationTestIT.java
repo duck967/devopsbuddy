@@ -140,6 +140,8 @@ public class PasswordResetTokenIntegrationTestIT extends AbstractIntegrationTest
         assertTrue(actualTokens.size() == tokens.size());
         List<String> tokensAsList = tokens.stream().map(prt -> prt.getToken()).collect(Collectors.toList());
         List<String> actualTokensAsList = actualTokens.stream().map(prt -> prt.getToken()).collect(Collectors.toList());
+        java.util.Collections.sort(tokensAsList);
+        java.util.Collections.sort(actualTokensAsList);
         assertEquals(tokensAsList, actualTokensAsList);
 
     }

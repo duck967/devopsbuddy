@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 import com.devopsbuddy.DevopsbuddyApplication;
 import com.devopsbuddy.backend.persistence.domain.backend.Plan;
@@ -40,7 +41,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 // @WebAppConfiguration
 // @DataJpaTest
-public class UserIntegrationTestIT extends AbstractIntegrationTestIT {
+public class UserRepositoryIntegrationTestIT extends AbstractIntegrationTestIT {
     
     @Autowired
     private PlanRepository planRepository;
@@ -149,6 +150,30 @@ public class UserIntegrationTestIT extends AbstractIntegrationTestIT {
     }
 
 
+    @Test
+    public void testGetUserByEmail(TestInfo testInfo) throws Exception {
+
+        User user = createUser(testInfo);
+
+        User newlyFoundUser = userRepository.findByEmail(user.getEmail());
+        assertNotNull(newlyFoundUser);
+        assertNotNull(newlyFoundUser.getId());
+    }
+
+    @Test
+    public void testUpdateUserPassword(TestInfo testInfo) throws Exception {
+        User user = createUser(testInfo);
+        assertNotNull(user);
+        assertNotNull(user.getId());
+
+        String newPassword = UUID.randomUUID().toString();
+
+        userRepository.updateUserPassword(user.getId(), newPassword);
+
+        user = userRepository.findById(user.getId()).orElse(null);
+        assertEquals(newPassword, user.getPassword());
+
+    }
     //-----------------> Private methods
 
 
