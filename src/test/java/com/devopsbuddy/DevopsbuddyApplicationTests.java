@@ -1,10 +1,12 @@
 package com.devopsbuddy;
 
-import com.devopsbuddy.web.i18n.I18NService;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import com.devopsbuddy.backend.service.I18NService;
+
 import org.junit.jupiter.api.Assertions;
 
 @SpringBootTest

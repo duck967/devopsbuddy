@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.devopsbuddy.backend.service.UserSecurityService;
+import com.devopsbuddy.web.controllers.ForgotMyPasswordController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -51,6 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/contact/**",
             "/error/**/*",
             "/h2-console/**",
+            ForgotMyPasswordController.FORGOT_PASSWORD_URL_MAPPING,
     };
 
     @Override
